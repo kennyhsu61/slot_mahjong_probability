@@ -6,7 +6,8 @@ import (
 )
 
 var (
-	Config = &GameConfig{}
+	Config       = &GameConfig{}
+	bottomSymbol = make([]SymbolID, 5)
 )
 
 func init() {
@@ -98,14 +99,14 @@ func init() {
 	//0:<RTP[1]97.5> 使用的SpinState
 	tempOption = &GameOption{
 		Options: []int{1, 2, 3}, //高、低、零
-		Weights: []int{108, 148, 6},
+		Weights: []int{106, 151, 6},
 	}
 	Config.GameStripOption[1][ESS_NG_1] = append(Config.GameStripOption[1][ESS_NG_1], tempOption)
 
 	//0:<RTP[2]99> 使用的SpinState
 	tempOption = &GameOption{
 		Options: []int{1, 2, 3}, //高、低、零
-		Weights: []int{110, 145, 3},
+		Weights: []int{1100, 1496, 30},
 	}
 	Config.GameStripOption[2][ESS_NG_1] = append(Config.GameStripOption[2][ESS_NG_1], tempOption)
 

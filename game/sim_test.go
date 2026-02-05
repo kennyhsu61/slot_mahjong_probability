@@ -30,7 +30,7 @@ func TestFish_GetResult(t *testing.T) {
 	//VI計算參數
 	var meanRTP, delta, sumSigma float64 //1.meanRTP 表示的是逐步更新的 RTP 平均值。 2.delta 是每次迭代中樣本與當前均值的差異。 3.sumSigma 用來計算平方差的累積值。
 	multipleCount := uint64(0)           //統計所有累積倍數的總和
-	round := 1000 * 10000
+	round := 10000 * 10000
 
 	gameInput := &Input{
 		RTPIndex:        0,     //RTP設定->[0]:95 [1]:97.5 [2]:99

@@ -11,9 +11,9 @@ func singleWinResult(gameInput *Input, gameOutput *Output, spinInfo *SpinInfo) *
 	if len(winResult.WinLine) == 0 {
 		calculator.calcFGWin(winResult)
 	}
+	calculator.GetShowScreen(winResult, spinInfo)
 	calculator.calcFGTriggerInfo(winResult, spinInfo)
 	//填入其他資訊
-	winResult.Screen = spinInfo.Screen
 	winResult.SpinState = calculator.SpinState
 	winResult.CascadingRound = spinInfo.CascadingRound
 	winResult.ScreenMultiplier = calculator.ScreenMulti
@@ -262,6 +262,34 @@ func (calculator *CalcData) calcFGWin(winResult *WinResult) {
 		AddWinLine(winResult, winUnit)
 	}
 
+}
+
+func (calculator *CalcData) GetShowScreen(winResult *WinResult, spinInfo *SpinInfo) {
+	var screen = calculator.Screen //取得盤面
+	var showScreen = make([][]SymbolID, len(screen))
+
+	for i := 0; i < len(screen); i++ {
+		showScreen[i] = make([]SymbolID, len(screen[i])+1) //showScreen要產7x5的盤面
+		reel := calculator.StripTable[i]
+		stripLen := len(reel)
+		rndNum := calculator.RNG[i]
+
+		for j := 0; j < len(showScreen[i]); j++ {
+			if j == 0 {
+				//第一排塞RNG的上面一個圖標
+				if rndNum == 0 {
+					showScreen[i][j] = reel[stripLen-1]
+				} else {
+					showScreen[i][j] = reel[rndNum-1]
+				}
+			} else {
+				//剩下盤面把screen的圖標代進來
+				showScreen[i][j] = screen[i][j-1]
+			}
+		}
+	}
+
+	winResult.Screen = showScreen
 }
 
 func (calculator *CalcData) calcFGTriggerInfo(winResult *WinResult, spinInfo *SpinInfo) {
